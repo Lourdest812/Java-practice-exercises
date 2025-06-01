@@ -18,6 +18,9 @@ bin/
 *.iws
 .vscode/
 
+# Eclipse workspace metadata
+.metadata/
+
 # OS files
 .DS_Store
 Thumbs.db
