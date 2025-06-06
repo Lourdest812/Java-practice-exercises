@@ -71,3 +71,10 @@ Thumbs.db
 *.lib
 *.c~
 *.h~
+
+
+# Archivos propios de mi proyecto
+practica_hilos/.classpath
+practica_hilos/.project
+tp_programacion_concurrente/.classpath
+tp_programacion_concurrente/.project
