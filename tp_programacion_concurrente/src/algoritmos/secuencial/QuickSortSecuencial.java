@@ -1,5 +1,5 @@
 package algoritmos.secuencial;
-
+//Codigo basado en el siguiente enlace https://www.geeksforgeeks.org/java-program-for-quicksort/
 public class QuickSortSecuencial {
     public static int partition(int[] a, int low, int high)
     {

@@ -1,16 +1,17 @@
 //Codigo basado en el siguiente enlace: https://www.geeksforgeeks.org/quick-sort-using-multi-threading/
 
 package algoritmos.concurrente;
-import java.io.*;
-import java.util.Arrays;
 import java.util.Random;
-import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.RecursiveTask;
 
+import datos.PivotStrategy;
+
+@SuppressWarnings("serial")
 public class QuickSortConcurrente
         extends RecursiveTask<Integer> {
     int start, end;
     int[] arr;
+    private PivotStrategy strategy;
 
     /**
      * Finding random pivoted and partition
@@ -29,9 +30,7 @@ public class QuickSortConcurrente
         int i = start, j = end;
 
         // Elige un pivote random
-        int pivoted = new Random()
-                .nextInt(j - i)
-                + i;
+        int pivoted = choosePivot(start, end, arr, strategy);
 
         // Intercambia "pivoted" (la posicion donde 
         // quedo el pivot en la iteracion anterior) con el ultimo
@@ -102,7 +101,18 @@ public class QuickSortConcurrente
 
     // Funcion para implementar
     // metodo QuickSort
+    @SuppressWarnings("static-access")
     public QuickSortConcurrente(int start,
+                                   int end,
+                                   int[] arr, PivotStrategy strategy)
+    {
+        this.arr = arr;
+        this.start = start;
+        this.end = end;
+        this.strategy = strategy;
+    }
+
+        public QuickSortConcurrente(int start,
                                    int end,
                                    int[] arr)
     {
@@ -135,12 +145,12 @@ public class QuickSortConcurrente
         QuickSortConcurrente left
                 = new QuickSortConcurrente(start,
                 p - 1,
-                arr);
+                arr, strategy);
 
         QuickSortConcurrente right
                 = new QuickSortConcurrente(p + 1,
                 end,
-                arr);
+                arr,  strategy);
 
         // left corre este mismo algoritmo en un hilo aparte
         left.fork();
@@ -157,45 +167,31 @@ public class QuickSortConcurrente
         //Se obtiene el nombre de cada hilo e imprimo un mensaje
         //Esto solo lo hago para probar que realmente los dos hilos
         //se terminan de ejecutar en tiempos diferentes
-        System.out.println("Ya termine..." + " - Nombre del hilo=" + Thread.currentThread().getName() + 
-                " - start=" + start + " - end=" + end);
 
         // No queremos que retorne nada
         return null;
     }
 
-    // Codigo de prueba del algoritmo
-    public static void main(String args[])
-    {
-    	Random rand = new Random();
-    	
-    	final int TAM = rand.nextInt(0,100);
-    	
-    	System.out.println("El tamanio del arreglo va a ser: " + TAM);
-    	
-    	int [] arr = new int[TAM];
-    	
-    	for(int i=0;i<TAM;i++) {
-    		arr[i] = rand.nextInt(0,100);
-    	}
-        //int[] arr = { 54, 64, 95, 82, 12, 32, 63 };
-        
-        System.out.println("-----------ARREGLO ORIGINAL-----------");
-        System.out.println(Arrays.toString(arr));
-
-        // Forkjoin ThreadPool to keep
-        // thread creation as per resources
-        ForkJoinPool pool
-                = ForkJoinPool.commonPool();
-
-        // Start the first thread in fork
-        // join pool for range 0, n-1
-        pool.invoke(
-                new QuickSortConcurrente(
-                        0, arr.length - 1, arr));
-
-        // Imprime el arreglo ya ordenado
-        System.out.println("-----------ARREGLO ORDENADO-----------");
-        System.out.println(Arrays.toString(arr));
+    private int generateRandomPivot(){
+        return new Random().nextInt(end - start + 1) + start;
     }
+
+    private int choosePivot(int start, int end, int[] arr, PivotStrategy strategy) {
+    switch (strategy) {
+        case FIRST:
+            return start; // Elige el primer elemento como pivote
+        case LAST:
+            return end; // Elige el último elemento como pivote
+        case MEDIAN:
+            int mid = start + (end - start) / 2;
+            int a = arr[start], b = arr[mid], c = arr[end];
+            // Devuelve el índice de la mediana de tres
+            if ((a > b) != (a > c)) return start;
+            else if ((b > a) != (b > c)) return mid;
+            else return end;
+        case RANDOM:
+        default:
+            return generateRandomPivot();
+    }
+  }
 }
