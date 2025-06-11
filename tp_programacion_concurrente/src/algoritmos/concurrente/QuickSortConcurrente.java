@@ -6,7 +6,6 @@ import java.util.concurrent.RecursiveTask;
 
 import datos.PivotStrategy;
 
-@SuppressWarnings("serial")
 public class QuickSortConcurrente
         extends RecursiveTask<Integer> {
     int start, end;
@@ -101,7 +100,6 @@ public class QuickSortConcurrente
 
     // Funcion para implementar
     // metodo QuickSort
-    @SuppressWarnings("static-access")
     public QuickSortConcurrente(int start,
                                    int end,
                                    int[] arr, PivotStrategy strategy)

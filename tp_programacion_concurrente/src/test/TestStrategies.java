@@ -8,10 +8,10 @@ import funciones.Funciones;
 
 public class TestStrategies {
     public static void main(String[] args) {
-        
-        pruebasQuickSortStrategies(Tamanios.TAMANIOS[0]);//10
-        pruebasQuickSortStrategies(Tamanios.TAMANIOS[3]);//1000000
-        
+        for(int tam : Tamanios.TAMANIOS){
+            System.out.println("\n====================== TAMANIO: " + tam + " ======================");
+            pruebasQuickSortStrategies(tam);
+        }
     }
     private static void pruebasQuickSortStrategies(int tam){
         for(PivotStrategy strategy: PivotStrategy.values()){

@@ -64,7 +64,7 @@ public class Funciones {
         if(arr.length<20){
             System.out.print(Arrays.toString(arr));
         }else{
-        	System.out.println("El array excede los 20 elementos");
+        	System.out.println("Se muestran solo los primeros 20 elementos debido al tamanio del array");
             for(int i=0;i<20;i++){
                 System.out.print(" " + arr[i] + " ");
             }
