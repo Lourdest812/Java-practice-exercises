@@ -40,8 +40,8 @@ El proyecto incluye tests para detectar excepciones comunes como:
 
 ## Créditos
 
-- Basado en los ejemplos de GeeksForGeeks
-  Algoritmo secuencial: https://www.geeksforgeeks.org/java-program-for-quicksort/
-  Algoritmo concurrente: https://www.geeksforgeeks.org/quick-sort-using-multi-threading/
+- Basado en los ejemplos de GeeksForGeeks  
+  - Algoritmo secuencial: https://www.geeksforgeeks.org/java-program-for-quicksort/  
+  - Algoritmo concurrente: https://www.geeksforgeeks.org/quick-sort-using-multi-threading/
 
 ---
